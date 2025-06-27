@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# 建立 public 目錄（如果還沒有）
+mkdir -p public
+
+# 搬移靜態資料夾
+for dir in css js images fonts assets; do
+  if [ -d "$dir" ]; then
+    echo "Moving $dir to public/"
+    mv "$dir" public/
+  fi
+done
+
+# 搬移根目錄下的公開檔案
+for file in index.php favicon.ico robots.txt .htaccess; do
+  if [ -f "$file" ]; then
+    echo "Moving $file to public/"
+    mv "$file" public/
+  fi
+done
+
+# 搬移特定公開子目錄（如 advisories）
+if [ -d "advisories" ]; then
+  echo "Moving advisories to public/"
+  mv advisories public/
+fi
+
+echo "搬移完成！請手動確認所有引用路徑已修正。"
